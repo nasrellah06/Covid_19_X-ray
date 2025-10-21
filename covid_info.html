@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information COVID-19</title>
+    <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        /* Variables CSS */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-background);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 3rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .metrics {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        
+        .metric-card {
+            background: #f0f9ff;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #bae6fd;
+            text-align: center;
+        }
+        
+        .metric-card.success {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+        
+        .metric-card.warning {
+            background: #fef3c7;
+            border-color: #fde68a;
+        }
+        
+        .metric-card strong {
+            color: #1e40af;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-card.success strong {
+            color: #166534;
+        }
+        
+        .metric-card.warning strong {
+            color: #92400e;
+        }
+        
+        .metric-card span {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .section {
+            margin: 2rem 0;
+        }
+        
+        .section h2 {
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border: 1px solid #fecaca;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        .info-card.pneumonia {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-color: #fed7aa;
+        }
+        
+        .info-card.normal {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: #bbf7d0;
+        }
+        
+        .info-card h3 {
+            color: #dc2626;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .info-card.pneumonia h3 {
+            color: #d97706;
+        }
+        
+        .info-card.normal h3 {
+            color: #166534;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-grid h4 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .info-grid p {
+            color: #374151;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .info-grid ul {
+            color: #374151;
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+        
+        .info-grid li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .prevention-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .prevention-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+            border-left: 4px solid #10b981;
+        }
+        
+        .prevention-card.blue {
+            border-left-color: #3b82f6;
+        }
+        
+        .prevention-card.orange {
+            border-left-color: #f59e0b;
+        }
+        
+        .prevention-card.purple {
+            border-left-color: #8b5cf6;
+        }
+        
+        .prevention-card.cyan {
+            border-left-color: #06b6d4;
+        }
+        
+        .prevention-card.red {
+            border-left-color: #ef4444;
+        }
+        
+        .prevention-card h4 {
+            color: #166534;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .prevention-card.blue h4 {
+            color: #1e40af;
+        }
+        
+        .prevention-card.orange h4 {
+            color: #d97706;
+        }
+        
+        .prevention-card.purple h4 {
+            color: #7c3aed;
+        }
+        
+        .prevention-card.cyan h4 {
+            color: #0891b2;
+        }
+        
+        .prevention-card.red h4 {
+            color: #dc2626;
+        }
+        
+        .prevention-card ul {
+            color: #374151;
+            margin: 0;
+            padding-left: 1.2rem;
+            font-size: 0.9rem;
+        }
+        
+        .prevention-card li {
+            margin-bottom: 0.3rem;
+        }
+        
+        .message-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            border: 1px solid #93c5fd;
+        }
+        
+        .message-box h4 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .message-box p {
+            color: #374151;
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .type-card {
+            padding: 1rem;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+        }
+        
+        .type-card.success {
+            background: #f0fdf4;
+            border-left-color: #10b981;
+        }
+        
+        .type-card.warning {
+            background: #fef3c7;
+            border-left-color: #f59e0b;
+        }
+        
+        .type-card strong {
+            color: #1e40af;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .type-card.success strong {
+            color: #166534;
+        }
+        
+        .type-card.warning strong {
+            color: #d97706;
+        }
+        
+        .type-card span {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+        
+        .health-message {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            border: 1px solid #6ee7b7;
+        }
+        
+        .health-message h4 {
+            color: #065f46;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .health-message p {
+            color: #374151;
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .prevention-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩺 Système de Diagnostic Médical IA</h1>
+            <p>Analyse automatique de radiographies pulmonaires pour la détection de COVID-19, Pneumonie et cas Normaux</p>
+            <div class="metrics">
+                <div class="metric-card">
+                    <strong>🎯 Précision</strong>
+                    <span>>95%</span>
+                </div>
+                <div class="metric-card success">
+                    <strong>⚡ Rapidité</strong>
+                    <span><2 secondes</span>
+                </div>
+                <div class="metric-card warning">
+                    <strong>🔒 Sécurisé</strong>
+                    <span>Données privées</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🦠 Qu'est-ce que le COVID-19 ?</h2>
+            <div class="info-card">
+                <h3>🦠 COVID-19 (Coronavirus Disease 2019)</h3>
+                <div class="info-grid">
+                    <div>
+                        <h4>📋 Définition</h4>
+                        <p>Le COVID-19 est une maladie infectieuse causée par le coronavirus SARS-CoV-2. 
+                        Elle affecte principalement le système respiratoire et peut provoquer des symptômes 
+                        allant du simple rhume à des complications respiratoires sévères.</p>
+                    </div>
+                    <div>
+                        <h4>🔍 Symptômes Principaux</h4>
+                        <ul>
+                            <li>Fièvre et frissons</li>
+                            <li>Toux sèche persistante</li>
+                            <li>Difficultés respiratoires</li>
+                            <li>Perte de goût/odorat</li>
+                            <li>Fatigue intense</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🛡️ Comment se Protéger du COVID-19 ?</h2>
+            <div class="info-card">
+                <h3>🛡️ Mesures de Prévention Essentielles</h3>
+                <div class="prevention-grid">
+                    <div class="prevention-card">
+                        <h4>😷 Port du Masque</h4>
+                        <ul>
+                            <li>Portez un masque en tissu ou chirurgical</li>
+                            <li>Changez-le régulièrement</li>
+                            <li>Couvrez le nez et la bouche</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="prevention-card blue">
+                        <h4>📏 Distanciation Sociale</h4>
+                        <ul>
+                            <li>Maintenez 1-2 mètres de distance</li>
+                            <li>Évitez les rassemblements</li>
+                            <li>Limitez les contacts sociaux</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="prevention-card orange">
+                        <h4>🧼 Hygiène des Mains</h4>
+                        <ul>
+                            <li>Lavez-vous les mains 20 secondes</li>
+                            <li>Utilisez du gel hydroalcoolique</li>
+                            <li>Évitez de toucher votre visage</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="prevention-card purple">
+                        <h4>💉 Vaccination</h4>
+                        <ul>
+                            <li>Vaccinez-vous selon les recommandations</li>
+                            <li>Respectez les rappels</li>
+                            <li>Consultez votre médecin</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="prevention-card cyan">
+                        <h4>🌬️ Aération</h4>
+                        <ul>
+                            <li>Aérez régulièrement les espaces</li>
+                            <li>Évitez les espaces clos</li>
+                            <li>Privilégiez les espaces extérieurs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="prevention-card red">
+                        <h4>🚨 Surveillance</h4>
+                        <ul>
+                            <li>Surveillez vos symptômes</li>
+                            <li>Restez chez vous si malade</li>
+                            <li>Consultez un médecin si nécessaire</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="message-box">
+                    <h4>💪 Ensemble, Nous Pouvons Combattre le COVID-19</h4>
+                    <p>Chaque geste compte ! En respectant ces mesures de prévention, nous contribuons tous 
+                    à protéger notre santé et celle de nos proches. La solidarité et la responsabilité 
+                    individuelle sont nos meilleures armes contre cette pandémie.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🫁 Qu'est-ce que la Pneumonie ?</h2>
+            <div class="info-card pneumonia">
+                <h3>🫁 Pneumonie - Infection Pulmonaire</h3>
+                <div class="info-grid">
+                    <div>
+                        <h4>📋 Définition</h4>
+                        <p>La pneumonie est une infection qui enflamme les sacs d'air dans un ou les deux poumons. 
+                        Les sacs peuvent se remplir de liquide ou de pus, provoquant une toux avec du mucus, 
+                        de la fièvre, des frissons et des difficultés respiratoires.</p>
+                    </div>
+                    <div>
+                        <h4>🔍 Symptômes Principaux</h4>
+                        <ul>
+                            <li>Toux avec mucus</li>
+                            <li>Fièvre et frissons</li>
+                            <li>Douleur thoracique</li>
+                            <li>Essoufflement</li>
+                            <li>Fatigue et faiblesse</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);">
+                    <h4 style="color: #1f2937; margin-bottom: 1rem;">🔬 Types de Pneumonie</h4>
+                    <div class="types-grid">
+                        <div class="type-card">
+                            <strong>Bactérienne</strong>
+                            <span>Causée par des bactéries</span>
+                        </div>
+                        <div class="type-card success">
+                            <strong>Virale</strong>
+                            <span>Causée par des virus</span>
+                        </div>
+                        <div class="type-card warning">
+                            <strong>Fongique</strong>
+                            <span>Causée par des champignons</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✅ Radiographies Pulmonaires Normales</h2>
+            <div class="info-card normal">
+                <h3>✅ Radiographie Pulmonaire Normale</h3>
+                <div class="info-grid">
+                    <div>
+                        <h4>📋 Caractéristiques</h4>
+                        <p>Une radiographie pulmonaire normale montre des poumons clairs sans signes d'infection, 
+                        d'inflammation ou d'autres anomalies. Les structures pulmonaires sont bien définies 
+                        et il n'y a pas d'opacités anormales.</p>
+                    </div>
+                    <div>
+                        <h4>🔍 Signes de Bonne Santé</h4>
+                        <ul>
+                            <li>Poumons clairs et bien aérés</li>
+                            <li>Pas d'opacités anormales</li>
+                            <li>Structures cardiaques normales</li>
+                            <li>Pas d'épanchement pleural</li>
+                            <li>Symétrie bilatérale</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="health-message">
+                    <h4>🌱 Maintenir une Bonne Santé Respiratoire</h4>
+                    <p>Une radiographie normale est un excellent signe ! Continuez à maintenir une bonne hygiène de vie, 
+                    évitez le tabac, pratiquez une activité physique régulière et consultez votre médecin 
+                    pour des examens de routine.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
