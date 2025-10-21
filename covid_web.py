@@ -6,8 +6,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 
 # --- Charger le modèle ---
-model = tf.keras.models.load_model("C:\\Users\\Arrich Nasrellah\\Desktop\\Première année\\PROJET_FA\\Covid_Flask\\meilleur_model_covid_RMS.keras")
-
+model = tf.keras.models.load_model("C:\\Users\\Arrich Nasrellah\\Desktop\\Première année\\PROJET_FA\\Covid_Github\\meilleur_model_covid_RMS.keras")
 # Classes
 CLASSES = ["Normal", "Covid", "Pneumonia"]
 
